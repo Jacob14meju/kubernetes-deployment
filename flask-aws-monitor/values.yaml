@@ -1,0 +1,24 @@
+image: jacob14meju/jacob
+tag: 1.1
+
+
+env:
+  ACCESS_KEY_EXAMPLE: <YOUR_ACCESS_KEY>
+  SECRET_KEY_EXAMPLE: <YOUR_SECRET_KEY>
+
+
+replicas: 2
+
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+    
+service:
+  targetPort: 5001
+  port: 5001
