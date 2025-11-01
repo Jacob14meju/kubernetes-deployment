@@ -16,19 +16,19 @@ spec:
         {{- include "labels" . | nindent 8 }}
     spec:
       containers:
-      - name: flask-monitor-container
-        image: {{ .Values.image }}:{{ .Values.tag | default "latest" }}
-        ports:
-        - containerPort: {{ .Values.service.targetPort }}
-        env:
-        - name: my_access_key_id
-          ValueFrom:
-            secretKeyRef:
-              name: flask-secret
-              key: ACCESS_KEY_EXAMPLE
-        - name: my_secret_access_key
-          ValueFrom:
-            secretKeyRef:
-              name: flask-monitor-secret
-              key: SECRET_KEY_EXAMPLE
+        - name: flask-monitor-container
+          image: {{ .Values.image }}:{{ .Values.tag | default "latest" }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          env:
+            - name: my_access_key_id
+              ValueFrom:
+                secretKeyRef:
+                  name: flask-secret
+                  key: ACCESS_KEY_EXAMPLE
+            - name: my_secret_access_key
+              ValueFrom:
+                secretKeyRef:
+                  name: flask-monitor-secret
+                  key: SECRET_KEY_EXAMPLE
 
