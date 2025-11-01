@@ -12,10 +12,10 @@ spec:
     - host: flask-monitor.local
       http:
         paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: flask-monitor-svc
-              port:
-                number: {{ .Values.service.port }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flask-monitor-svc
+                port:
+                  number: {{ .Values.service.port }}
