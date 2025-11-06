@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: flask-aws-monitor-ingress
+  name: {{ .Release.Name }}-ingress
   labels:
     {{- include "labels" . | nindent 4 }}
   annotations:
@@ -9,13 +9,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: flask-monitor.local
+    - host: {{ .Release.Name }}.local
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: flask-monitor-svc
+                name: {{ .Release.Name }}-svc
                 port:
                   number: {{ .Values.service.port }}

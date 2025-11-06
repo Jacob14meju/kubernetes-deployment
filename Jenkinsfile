@@ -41,12 +41,12 @@ spec:
            parallel{
                 stage('Linting') {
                     steps {
-                        echo 'TODO: Add linting steps for Python, Shell, and Dockerfile'
+                        echo 'linting steps for Python, Shell, and Dockerfile'
                     }
                 }
                 stage('Security Scan') {
                     steps {
-                        echo 'TODO: Add security scanning steps for dependencies and container security'
+                        echo 'security scanning steps for dependencies and container security'
                     }
                 }
            }
@@ -70,13 +70,14 @@ spec:
 
         stage('push changes to github'){
             steps {
-                sh """
-                    git config user.email "mejuboygamer@gmail.com"
-                    git config user.name "jacob14meju"
-                    sed -i "s/tag:.*/tag: ${env.BUILD_NUMBER}/" flask-monitor/values.yaml
-                    git add .
-                    git commit -m "Automated commit from Jenkins Pipeline - Build #${env.BUILD_NUMBER}"
-                    git push origin main
+                withCredentials([usernamePassword(credentialsId: 'github-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                    sh """
+                        git config user.email "mejuboygamer@gmail.com"
+                        git config user.name "${GIT_USERNAME}"
+                        sed -i "s/tag:.*/tag: ${env.BUILD_NUMBER}/" flask-monitor/values.yaml
+                        git add .
+                        git commit -m "Automated commit from Jenkins Pipeline - Build #${env.BUILD_NUMBER}"
+                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Jacob14meju/kubernetes-deployment.git main
                     """
             }
         }

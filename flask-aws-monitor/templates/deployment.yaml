@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-monitor-deploy
+  name: {{ .Release.Name }}-deploy
   labels:
     {{- include "labels" . | nindent 4 }}
 spec:
@@ -11,24 +11,24 @@ spec:
       {{- include "labels" . | nindent 6 }}
   template:
     metadata:
-      name: flask-monitor-pod
+      name: {{ .Release.Name }}-pod
       labels:
         {{- include "labels" . | nindent 8 }}
     spec:
       containers:
-        - name: flask-monitor-container
-          image: {{ .Values.image }}:{{ .Values.tag | default "latest" }}
+        - name: {{ .Release.Name }}-container
+          image: {{ .Values.repo }}/{{ .Values.image }}:{{ .Values.tag | default "latest" }}
           ports:
             - containerPort: {{ .Values.service.targetPort }}
           env:
             - name: my_access_key_id
-              ValueFrom:
+              valueFrom:
                 secretKeyRef:
                   name: flask-secret
                   key: ACCESS_KEY_EXAMPLE
             - name: my_secret_access_key
-              ValueFrom:
+              valueFrom:
                 secretKeyRef:
-                  name: flask-monitor-secret
+                  name: flask-secret
                   key: SECRET_KEY_EXAMPLE
 

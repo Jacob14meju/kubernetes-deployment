@@ -1,5 +1,6 @@
-image: jacob14meju/jacob
-tag: 1.1
+repo: docker.io/jacob14meju
+image: flask-aws-monitor
+tag: "1.1"
 
 
 env:
